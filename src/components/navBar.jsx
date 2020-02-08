@@ -1,7 +1,4 @@
 import React from 'react';
-import Movies from './movies';
-import Customers from './customers';
-import Rentals from './rentals';
 import { Link, NavLink } from 'react-router-dom';
 
 const NavBar = () => {
@@ -31,6 +28,9 @@ const NavBar = () => {
           </NavLink>
           <NavLink className='nav-item nav-link' to='/rentals'>
             Rentals
+          </NavLink>
+          <NavLink className='nav-item nav-link' to='/login'>
+            Login
           </NavLink>
         </div>
       </div>
