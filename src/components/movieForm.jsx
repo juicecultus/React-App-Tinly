@@ -1,8 +1,8 @@
 import React from 'react';
-import Form from './common/form';
-import { getGenres } from '../services/genreService';
 import Joi from 'joi-browser';
+import Form from './common/form';
 import { getMovie, saveMovie } from '../services/movieService';
+import { getGenres } from '../services/genreService';
 
 class MovieForm extends Form {
   state = {
@@ -32,7 +32,7 @@ class MovieForm extends Form {
     dailyRentalRate: Joi.number()
       .required()
       .min(0)
-      .max(100)
+      .max(10)
       .label('Daily Rental Rate')
   };
 
@@ -61,7 +61,7 @@ class MovieForm extends Form {
 
   mapToViewModel(movie) {
     return {
-      _id: movie.id,
+      _id: movie._id,
       title: movie.title,
       genreId: movie.genre._id,
       numberInStock: movie.numberInStock,
@@ -82,7 +82,7 @@ class MovieForm extends Form {
         <form onSubmit={this.handleSubmit}>
           {this.renderInput('title', 'Title')}
           {this.renderSelect('genreId', 'Genre', this.state.genres)}
-          {this.renderInput('numberInStock', 'NumberInStock', 'number')}
+          {this.renderInput('numberInStock', 'Number in Stock', 'number')}
           {this.renderInput('dailyRentalRate', 'Rate')}
           {this.renderButton('Save')}
         </form>
