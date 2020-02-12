@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import MoviesTable from "./moviesTable";
-import ListGroup from "./common/listGroup";
-import Pagination from "./common/pagination";
-import { getMovies, deleteMovie } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
-import { paginate } from "../utils/paginate";
-import _ from "lodash";
-import SearchBox from "./searchBox";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import MoviesTable from './moviesTable';
+import ListGroup from './common/listGroup';
+import Pagination from './common/pagination';
+import { getMovies, deleteMovie } from '../services/fakeMovieService';
+import { getGenres } from '../services/genreService';
+import { paginate } from '../utils/paginate';
+import _ from 'lodash';
+import SearchBox from './searchBox';
 
 class Movies extends Component {
   state = {
@@ -15,13 +15,14 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
-    searchQuery: "",
+    searchQuery: '',
     selectedGenre: null,
-    sortColumn: { path: "title", order: "asc" }
+    sortColumn: { path: 'title', order: 'asc' }
   };
 
-  componentDidMount() {
-    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
+  async componentDidMount() {
+    const { data } = await getGenres();
+    const genres = [{ _id: '', name: 'All Genres' }, ...data];
 
     this.setState({ movies: getMovies(), genres });
   }
@@ -46,7 +47,7 @@ class Movies extends Component {
   };
 
   handleGenreSelect = genre => {
-    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
+    this.setState({ selectedGenre: genre, searchQuery: '', currentPage: 1 });
   };
 
   handleSearch = query => {
@@ -91,18 +92,18 @@ class Movies extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     return (
-      <div className="row">
-        <div className="col-3">
+      <div className='row'>
+        <div className='col-3'>
           <ListGroup
             items={this.state.genres}
             selectedItem={this.state.selectedGenre}
             onItemSelect={this.handleGenreSelect}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <Link
-            to="/movies/new"
-            className="btn btn-primary"
+            to='/movies/new'
+            className='btn btn-primary'
             style={{ marginBottom: 20 }}
           >
             New Movie
