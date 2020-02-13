@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Movies from './components/movies';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notFound';
-import { Route, Redirect, Switch } from 'react-router-dom';
 import NavBar from './components/navBar';
 import MovieForm from './components/movieForm';
 import LoginForm from './components/loginForm';
 import RegisterForm from './components/registerForm';
 import Logout from './components/common/logout';
+import ProtectedRoute from './components/common/protectedRoute';
 import auth from './services/authService';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -34,13 +35,7 @@ class App extends Component {
             <Route path='/register' component={RegisterForm}></Route>
             <Route path='/login' component={LoginForm}></Route>
             <Route path='/logout' component={Logout}></Route>
-            <Route
-              path='/movies/:id'
-              render={props => {
-                if (!user) return <Redirect to='/login' />;
-                return <MovieForm {...props} />;
-              }}
-            />
+            <ProtectedRoute path='/movies/:id' component={MovieForm} />
             <Route
               path='/movies'
               render={props => <Movies {...props} user={user} />}
